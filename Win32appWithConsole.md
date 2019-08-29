@@ -1,3 +1,14 @@
+* 需要包含的头文件有
+```
+// Windows 头文件: 
+#include <windows.h>
+
+// C 运行时头文件
+#include <stdlib.h>
+#include <malloc.h>
+#include <memory.h>
+#include <tchar.h>
+```
 * 声明
 ```
 enum msgType                      //消息类型
