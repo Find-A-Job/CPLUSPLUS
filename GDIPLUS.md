@@ -53,7 +53,7 @@ graph.DrawImage(pbp, 0, 0);
 ```
 //绘制一个黑色背景
 Gdiplus::Graphics graph(hdc);//从WM_PAINT获取的hdc
-Gdiplus::SolidBrush pciBrush(gpColor(255, 0, 0, 0));
+Gdiplus::SolidBrush pciBrush(Gdiplus::Color(255, 0, 0, 0));
 graph.FillRectangle(&pciBrush, 0, 0, 60, 150);
 
 Gdiplus::Bitmap image3(_T("xxx"));//图片是png格式
