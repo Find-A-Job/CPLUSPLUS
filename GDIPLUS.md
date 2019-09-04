@@ -49,5 +49,30 @@ graph.DrawImage(pbp, 0, 0);
 且其构造函数创建的变量是局部变量,而clone出来的是全局变量(估计从栈中分配了内存，可能需要释放).
 (以上都是分析出来的，没啥官方依据)
 ```
+* 修改alpha值，碰到的问题
+```
+//绘制一个黑色背景
+Gdiplus::Graphics graph(hdc);//从WM_PAINT获取的hdc
+Gdiplus::SolidBrush pciBrush(gpColor(255, 0, 0, 0));
+graph.FillRectangle(&pciBrush, 0, 0, 60, 150);
+
+Gdiplus::Bitmap image3(_T("xxx"));//图片是png格式
+Gdiplus::ColorMatrix colorMatrix = { 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+				                             0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+				                             0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+				                             0.0f, 0.0f, 0.0f, 0.2f, 0.0f,
+				                             0.0f, 0.0f, 0.0f, 0.0f, 1.0f };
+Gdiplus::ImageAttributes imageAttr;
+imageAttr.SetColorMatrix(&colorMatrix, Gdiplus::ColorMatrixFlagsDefault, Gdiplus::ColorAdjustTypeBitmap);
+
+Gdiplus::RectF rtf(0, 0, image3.GetWidth(), image3.GetHeight());
+graph.DrawImage(&image3, rtf, 0, 0, image3.GetWidth(), image3.GetHeight(), Gdiplus::UnitPixel, &imageAttr);//
+
+上面的代码，f5调试运行没问题，但是再修改一次那个0.2f(改为0.8f)，就会失效，呈现的效果还是0.2f的效果
+一般情况下，先注释掉graph.DrawImage这段然后f5跑一次，再取消注释f5跑一次,就能正常
+总结起来就是这么个情况:代码1跑起来，呈现了效果1，这个时候修改代码1的部分数据(修改数据后的代码称为代码2吧)，
+跑起来后还是呈现效果1(理论上应该呈现效果2)，跑几次都一样。注释掉代码2中的部分代码,再跑，再退出再取消注释再跑，
+这时候呈现了效果2。完
+```
 
 
