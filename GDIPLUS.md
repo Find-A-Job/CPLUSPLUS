@@ -51,17 +51,23 @@ graph.DrawImage(pbp, 0, 0);
 ```
 * 修改alpha值，碰到的问题
 ```
+//gdi+初始化 ，在某处
+ULONG_PTR gdipToken;
+Gdiplus::GdiplusStartupInput gdipInput;
+Gdiplus::GdiplusStartup(&gdipToken, &gdipInput, NULL);
+...
 //绘制一个黑色背景
 Gdiplus::Graphics graph(hdc);//从WM_PAINT获取的hdc
 Gdiplus::SolidBrush pciBrush(Gdiplus::Color(255, 0, 0, 0));
 graph.FillRectangle(&pciBrush, 0, 0, 60, 150);
 
 Gdiplus::Bitmap image3(_T("xxx"));//图片是png格式
-Gdiplus::ColorMatrix colorMatrix = { 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-				                             0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-				                             0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-				                             0.0f, 0.0f, 0.0f, 0.2f, 0.0f,
-				                             0.0f, 0.0f, 0.0f, 0.0f, 1.0f };
+Gdiplus::ColorMatrix colorMatrix = { 
+1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+0.0f, 0.0f, 0.0f, 0.2f, 0.0f,
+0.0f, 0.0f, 0.0f, 0.0f, 1.0f };
 Gdiplus::ImageAttributes imageAttr;
 imageAttr.SetColorMatrix(&colorMatrix, Gdiplus::ColorMatrixFlagsDefault, Gdiplus::ColorAdjustTypeBitmap);
 
@@ -73,6 +79,8 @@ graph.DrawImage(&image3, rtf, 0, 0, image3.GetWidth(), image3.GetHeight(), Gdipl
 总结起来就是这么个情况:代码1跑起来，呈现了效果1，这个时候修改代码1的部分数据(修改数据后的代码称为代码2吧)，
 跑起来后还是呈现效果1(理论上应该呈现效果2)，跑几次都一样。注释掉代码2中的部分代码,再跑，再退出再取消注释再跑，
 这时候呈现了效果2。完
+------
+新：手动改虽然不可以，但是用代码动态改，是正常的，这不禁激发了我对gdiplus底层的好奇心
 ```
 
 
