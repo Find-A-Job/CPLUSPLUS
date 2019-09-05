@@ -60,7 +60,8 @@ public:
 	i32Val			getZposition();
 	gpColor			getColor();
 	gpSizeF			getSize();
-	float			getAlpha();
+	FLOAT			getImageAlpha();
+	BYTE			getColorAlpha();
 
 	void			setImage(pGpBitmap image);
 	void			setPosition(gpPoint position);
@@ -68,7 +69,8 @@ public:
 	void			setZposition(i32Val zPosition);
 	void			setColor(gpColor gpc);
 	void			setSize(gpSizeF size);
-	void			setAlpha(float alpha);
+	void			setImageAlpha(float alpha);
+	void			setColorAlpha(BYTE alpha);
 
 
 public:
@@ -108,6 +110,7 @@ protected:
 //全局函数
 void initList(void);
 void drawImageWithList(HWND, HDC);		//准确的应该是shouldItBeDrawn
+void modifyValue();
 
 //
 gpPoint		gpMakePointF(float a, float b);

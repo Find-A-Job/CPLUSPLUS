@@ -165,7 +165,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
 	case WM_CREATE:
 		{
-			//SetTimer(hWnd, 1, 20, (TIMERPROC)showImage);
+			SetTimer(hWnd, 1, 20, (TIMERPROC)showImage);
 		}
 		break;
     case WM_COMMAND:
@@ -191,26 +191,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 在此处添加使用 hdc 的任何绘图代码...
 
-
-			//updateDraw(hWnd, hdc);
-
-			Gdiplus::Graphics graph(hdc);
-			Gdiplus::SolidBrush pciBrush(Gdiplus::Color(255, 0, 0, 0));
-			graph.FillRectangle(&pciBrush, 0, 0, 50, 150);
-
-			Gdiplus::Bitmap image3(_T("D:\\PSIMAGE\\man_walkWithBackgroundcolor\\moveDown1.png"));
-			//bitmap属性
-			Gdiplus::ColorMatrix colorMatrix = { 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-				0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-				0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-				0.0f, 0.0f, 0.0f, 0.8f, 0.0f,
-				0.0f, 0.0f, 0.0f, 0.0f, 1.0f };
-			Gdiplus::ImageAttributes imageAttr;
-			imageAttr.SetColorMatrix(&colorMatrix, Gdiplus::ColorMatrixFlagsDefault, Gdiplus::ColorAdjustTypeBitmap);
-
-			Gdiplus::RectF rtf(0, 0, image3.GetWidth(), image3.GetHeight());
-			graph.DrawImage(&image3, rtf, 0, 0, image3.GetWidth(), image3.GetHeight(), Gdiplus::UnitPixel, &imageAttr);
-
+			//
+			updateDraw(hWnd, hdc);
 
             EndPaint(hWnd, &ps);
         }
@@ -330,6 +312,8 @@ void printfMsg(TCHAR *msg, msgType mt)
 
 void CALLBACK showImage(HWND hWnd, UINT message, UINT iTimerID, DWORD dwTime)
 {
+	modifyValue();
+
 	InvalidateRect(hWnd, NULL, false);
 	SendMessage(hWnd, WM_PAINT, MAKELONG(1, 0), 1);
 

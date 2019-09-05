@@ -21,11 +21,13 @@ spriteBase::spriteBase()
 	m_fPosition		= gpMakePointF(0, 0);	//坐标
 	m_iZposition	= 1;					//z序
 	m_isHidden		= false;				//是否隐藏
+	m_fImageAlpha	= 1.0f;					//图片的不透明度
 
 
 	m_isPureColor	= true;					//是否为纯色图
 	m_color			= gpColor(255, 0, 0, 0);//颜色
 	m_fSize			= gpMakeSizeF(0, 0);	//纯色image尺寸
+	m_byteColorAlpha = m_color.GetAlpha();	//纯色image的不透明度
 }
 spriteBase::spriteBase(TCHAR *imageName)
 {
@@ -35,11 +37,13 @@ spriteBase::spriteBase(TCHAR *imageName)
 	m_fPosition		= gpMakePointF(0, 0);	//坐标
 	m_iZposition	= 1;					//z序
 	m_isHidden		= false;				//是否隐藏
+	m_fImageAlpha	= 1.0f;					//图片的不透明度
 
 
 	m_isPureColor	= false;				//是否为纯色图
 	m_color			= gpColor(0, 0, 0, 0);	//颜色
 	m_fSize			= gpMakeSizeF(0, 0);	//纯色image尺寸
+	m_byteColorAlpha = m_color.GetAlpha();//纯色image的不透明度
 }
 spriteBase::spriteBase(pGpBitmap image)
 {
@@ -48,11 +52,13 @@ spriteBase::spriteBase(pGpBitmap image)
 	m_fPosition		= gpMakePointF(0, 0);	//坐标
 	m_iZposition	= 1;					//z序
 	m_isHidden		= false;				//是否隐藏
+	m_fImageAlpha	= 1.0f;					//图片的不透明度
 
 
 	m_isPureColor	= false;				//是否为纯色图
 	m_color			= gpColor(0, 0, 0, 0);	//颜色
 	m_fSize			= gpMakeSizeF(0, 0);	//纯色image尺寸
+	m_byteColorAlpha = m_color.GetAlpha();//纯色image的不透明度
 }
 spriteBase::spriteBase(gpColor cpc)
 {
@@ -61,12 +67,13 @@ spriteBase::spriteBase(gpColor cpc)
 	m_fPosition		= gpMakePointF(0, 0);	//坐标
 	m_iZposition	= 1;					//z序
 	m_isHidden		= false;				//是否隐藏
+	m_fImageAlpha	= 0.0f;					//图片的不透明度
 
 
 	m_isPureColor	= true;					//是否为纯色图
 	m_color			= cpc;					//颜色
 	m_fSize			= gpMakeSizeF(0, 0);	//纯色image尺寸
-	
+	m_byteColorAlpha = m_color.GetAlpha();//纯色image的不透明度
 }
 
 spriteBase::~spriteBase()
@@ -104,6 +111,15 @@ void	spriteBase::setSize(gpSizeF size)
 {
 	this->m_fSize = size;
 }
+void	spriteBase::setImageAlpha(float alpha)
+{
+	this->m_fImageAlpha = alpha;
+}
+void	spriteBase::setColorAlpha(BYTE alpha)
+{
+	this->m_byteColorAlpha = alpha;
+	this->m_color = gpColor(alpha, m_color.GetRed(), m_color.GetGreen(), m_color.GetBlue());
+}
 
 
 
@@ -130,6 +146,14 @@ gpColor	spriteBase::getColor()
 gpSizeF spriteBase::getSize()
 {
 	return this->m_fSize;
+}
+FLOAT	spriteBase::getImageAlpha()
+{
+	return this->m_fImageAlpha;
+}
+BYTE	spriteBase::getColorAlpha()
+{
+	return this->m_byteColorAlpha;
 }
 
 //
@@ -285,17 +309,18 @@ void initList(void)
 	drawSpriteList.sort(spriteBase());
 
 	//清空链表
-	drawSpriteList.clear();
+	//drawSpriteList.clear();
 }
 void drawImageWithList(HWND hWnd, HDC hdc)
 {
 	pGpBitmap image;
-	double anchorX = 0;
-	double anchorY = 0;
-	double spriteWidth = 0;
+	double anchorX		= 0;
+	double anchorY		= 0;
+	double spriteWidth	= 0;
 	double spriteHeight = 0;
-	double coorX = 0;
-	double coorY = 0;
+	double coorX		= 0;
+	double coorY		= 0;
+	float	imageAlpha	= 0;
 
 	std::list<spriteBase> lsb;	//需要绘制的凑成一个链表
 	lsb.clear();
@@ -338,19 +363,20 @@ void drawImageWithList(HWND hWnd, HDC hdc)
 		else
 		{
 			//属性
-			image = sb.getImage();
-			anchorX = sb.getAnchor().X;
-			anchorY = sb.getAnchor().Y;
-			spriteWidth = image->GetWidth();
-			spriteHeight = image->GetHeight();
-			coorX = sb.getPosition().X;
-			coorY = sb.getPosition().Y;
+			image			= sb.getImage();
+			anchorX			= sb.getAnchor().X;
+			anchorY			= sb.getAnchor().Y;
+			spriteWidth		= image->GetWidth();
+			spriteHeight	= image->GetHeight();
+			coorX			= sb.getPosition().X;
+			coorY			= sb.getPosition().Y;
+			imageAlpha		= sb.getImageAlpha();
 
 			//bitmap属性
 			gpColorMatrix colorMatrix = {   1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
 											0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
 											0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-											0.0f, 0.0f, 0.0f, 0.5f, 0.0f,
+											0.0f, 0.0f, 0.0f, imageAlpha, 0.0f,
 											0.0f, 0.0f, 0.0f, 0.0f, 1.0f };
 			gpImageAttr imageAttr;
 			imageAttr.SetColorMatrix(&colorMatrix, Gdiplus::ColorMatrixFlagsDefault, Gdiplus::ColorAdjustTypeBitmap);
@@ -364,8 +390,47 @@ void drawImageWithList(HWND hWnd, HDC hdc)
 		//用完后数据弹出链表
 		lsb.pop_back();
 	}
-	//graph.SetCompositingMode(Gdiplus::CompositingModeSourceCopy);
 
+}
+
+void modifyValue()
+{
+	if (drawSpriteList.front().isPureColorImage() == true)
+	{
+		BYTE oldAlpha = drawSpriteList.front().getColorAlpha();
+		BYTE newAlpha = oldAlpha - 1;
+		if (newAlpha < 0)
+		{
+			newAlpha = 0;
+		}
+		else if (newAlpha > 255)
+		{
+			newAlpha = 255;
+		}
+		else
+		{
+			;
+		}
+		drawSpriteList.front().setColorAlpha(newAlpha);
+	}
+	else
+	{
+		FLOAT oldAlpha = drawSpriteList.front().getImageAlpha();
+		FLOAT newAlpha = oldAlpha - 0.01f;
+		if (newAlpha < 0)
+		{
+			newAlpha = 0;
+		}
+		else if (newAlpha > 1)
+		{
+			newAlpha = 1;
+		}
+		else
+		{
+			;
+		}
+		drawSpriteList.front().setImageAlpha(newAlpha);
+	}
 
 }
 
