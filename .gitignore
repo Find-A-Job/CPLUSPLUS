@@ -1,0 +1,11 @@
+$ cat .gitignore
+
+*.log
+*.tlog
+*.obj
+*.iobj
+*.pdb
+*.ipdb
+*.pch
+*.ipch
+*.sdf
