@@ -395,6 +395,13 @@ void drawImageWithList(HWND hWnd, HDC hdc)
 
 void modifyValue()
 {
+	TCHAR msg[256];
+	memset(msg, 0, sizeof(msg));
+	_stprintf_s(msg, _countof(msg), _T("%lu"), drawSpriteList.size());
+	
+	MessageBox(NULL, msg, _T(""), MB_OK);
+
+	MessageBox(NULL, _T(""), _T(""), MB_OK);
 	if (drawSpriteList.front().isPureColorImage() == true)
 	{
 		BYTE oldAlpha = drawSpriteList.front().getColorAlpha();

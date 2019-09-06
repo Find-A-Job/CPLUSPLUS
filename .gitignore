@@ -9,3 +9,6 @@ $ cat .gitignore
 *.pch
 *.ipch
 *.sdf
+*.exe
+#
+/Game0826/Release/

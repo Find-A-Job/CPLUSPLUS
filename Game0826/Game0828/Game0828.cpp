@@ -312,7 +312,7 @@ void printfMsg(TCHAR *msg, msgType mt)
 
 void CALLBACK showImage(HWND hWnd, UINT message, UINT iTimerID, DWORD dwTime)
 {
-	modifyValue();
+	//modifyValue();
 
 	InvalidateRect(hWnd, NULL, false);
 	SendMessage(hWnd, WM_PAINT, MAKELONG(1, 0), 1);

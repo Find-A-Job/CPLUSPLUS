@@ -110,6 +110,7 @@ protected:
 //全局函数
 void initList(void);
 void drawImageWithList(HWND, HDC);		//准确的应该是shouldItBeDrawn
+void addChildToRoot(spriteBase sb);
 void modifyValue();
 
 //
