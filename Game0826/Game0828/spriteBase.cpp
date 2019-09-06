@@ -256,7 +256,7 @@ void initList(void)
 	spriteBase sb;
 	gpPoint	fpa(0.5, 1);
 	gpPoint	fpp(100, 100);
-	gpBitmap image(_T("D:\\PSIMAGE\\man_walkWithBackgroundcolor\\moveDown0.png"));
+	gpBitmap image(_T("..\\res\\man_walkWithBackgroundcolor\\moveDown0.png"));
 	sb.setAnchor(fpa);
 	sb.setPosition(fpp);
 	sb.setImage(image.Clone(0, 0, image.GetWidth(), image.GetHeight(), image.GetPixelFormat()));
@@ -267,7 +267,7 @@ void initList(void)
 	spriteBase sb2;
 	gpPoint	fpa2(0.5, 1);
 	gpPoint	fpp2(200, 100);
-	gpBitmap image2(_T("D:\\PSIMAGE\\man_walkWithBackgroundcolor\\moveDown1.png"));
+	gpBitmap image2(_T("..\\res\\man_walkWithBackgroundcolor\\moveDown1.png"));
 	sb2.setAnchor(fpa2);
 	sb2.setPosition(fpp2);
 	sb2.setImage(image2.Clone(0, 0, image2.GetWidth(), image2.GetHeight(), image2.GetPixelFormat()));
@@ -277,7 +277,7 @@ void initList(void)
 	spriteBase sb3;
 	gpPoint	fpa3(0, 0);
 	gpPoint	fpp3(0, 0);
-	gpBitmap image3(_T("D:\\PSIMAGE\\map.png"));
+	gpBitmap image3(_T("..\\res\\map.png"));
 	sb3.setAnchor(fpa3);
 	sb3.setPosition(fpp3);
 	sb3.setImage(image3.Clone(0, 0, image3.GetWidth(), image3.GetHeight(), image3.GetPixelFormat()));
@@ -285,7 +285,7 @@ void initList(void)
 	drawSpriteList.push_back(sb3);
 
 	//
-	spriteBase sb4(_T("D:\\PSIMAGE\\man_walkWithBackgroundcolor\\moveDown2.png"));
+	spriteBase sb4(_T("..\\res\\man_walkWithBackgroundcolor\\moveDown2.png"));
 	sb4.setAnchor(gpMakePointF(0.5, 1));
 	sb4.setPosition(gpMakePointF(300, 100));
 	sb4.setZposition(2);
