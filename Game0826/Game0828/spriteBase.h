@@ -23,7 +23,7 @@
 typedef Gdiplus::Graphics			gpGraphics;
 typedef Gdiplus::Bitmap				gpBitmap;
 typedef Gdiplus::Bitmap				*pGpBitmap;
-typedef Gdiplus::PointF				gpPoint;
+typedef Gdiplus::PointF				gpPointF;
 typedef Gdiplus::RectF				gpRectF;
 typedef Gdiplus::SizeF				gpSizeF;
 typedef Gdiplus::Color				gpColor;
@@ -55,8 +55,8 @@ public:
 public:
 	//成员set，get函数
 	pGpBitmap		getImage();
-	gpPoint			getPosition();
-	gpPoint			getAnchor();
+	gpPointF		getPosition();
+	gpPointF		getAnchor();
 	i32Val			getZposition();
 	gpColor			getColor();
 	gpSizeF			getSize();
@@ -64,8 +64,8 @@ public:
 	BYTE			getColorAlpha();
 
 	void			setImage(pGpBitmap image);
-	void			setPosition(gpPoint position);
-	void			setAnchor(gpPoint anchor);
+	void			setPosition(gpPointF position);
+	void			setAnchor(gpPointF anchor);
 	void			setZposition(i32Val zPosition);
 	void			setColor(gpColor gpc);
 	void			setSize(gpSizeF size);
@@ -81,18 +81,20 @@ public:
 
 public:
 	//other
+	spriteBase*		clone();
 	bool			isPureColorImage();
 	bool			shouldItDraw();				//是否需要被绘制
+	void			printMsg();
 
 public:
 	//操作符重载
-	bool			operator () (const spriteBase sb1, const spriteBase sb2);
+	bool			operator () (spriteBase *sb1, spriteBase *sb2);
 
 private:
 	//成员变量
 	pGpBitmap		m_pSptite;			//
-	gpPoint			m_fAnchor;			//锚点
-	gpPoint			m_fPosition;		//坐标
+	gpPointF		m_fAnchor;			//锚点
+	gpPointF		m_fPosition;		//坐标
 	i32Val			m_iZposition;		//z序
 	bool			m_isHidden;			//是否隐藏
 	float			m_fImageAlpha;		//图片不透明度
@@ -110,11 +112,11 @@ protected:
 //全局函数
 void initList(void);
 void drawImageWithList(HWND, HDC);		//准确的应该是shouldItBeDrawn
-void addChildToRoot(spriteBase sb);
+void addChildToRoot(spriteBase *sb);
 void modifyValue();
 
 //
-gpPoint		gpMakePointF(float a, float b);
+gpPointF	gpMakePointF(float a, float b);
 gpSizeF		gpMakeSizeF(float a, float b);
 gpRectF		gpMakeRectF(float x, float y, float width, float height);
 

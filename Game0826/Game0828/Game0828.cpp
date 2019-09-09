@@ -332,6 +332,12 @@ void initZMX(void)
 	Gdiplus::GdiplusStartup(&gdipToken, &gdipInput, NULL);
 
 	initList();
+
+	//spriteBase sb(gpColor(40, 100, 100, 100));
+	//sb.setZposition(11);
+	//sb.setSize(gpMakeSizeF(200, 200));
+	//addChildToRoot(sb);
+	//sb.setSize(gpMakeSizeF(400, 400));
 }
 
 void updateDraw(HWND hWnd, HDC hdc)
