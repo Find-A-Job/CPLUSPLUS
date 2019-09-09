@@ -342,7 +342,7 @@ void initList(void)
 	drawSpriteList.push_back(psb4);
 
 	//
-	spriteBase sb5(gpColor(100, 1, 1, 1));
+	spriteBase sb5(gpColor(0, 1, 1, 1));
 	sb5.setAnchor(gpMakePointF(0, 0));
 	sb5.setPosition(gpMakePointF(0, 0));
 	sb5.setSize(gpMakeSizeF(1000, 1000));

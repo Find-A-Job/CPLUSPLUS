@@ -333,11 +333,12 @@ void initZMX(void)
 
 	initList();
 
-	//spriteBase sb(gpColor(40, 100, 100, 100));
-	//sb.setZposition(11);
-	//sb.setSize(gpMakeSizeF(200, 200));
-	//addChildToRoot(sb);
-	//sb.setSize(gpMakeSizeF(400, 400));
+	spriteBase sb(gpColor(40, 100, 100, 100));
+	sb.setZposition(11);
+	sb.setSize(gpMakeSizeF(200, 200));
+	spriteBase *psb = sb.clone();
+	addChildToRoot(psb);
+	psb->setSize(gpMakeSizeF(800, 800));
 }
 
 void updateDraw(HWND hWnd, HDC hdc)
